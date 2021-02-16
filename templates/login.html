@@ -1,0 +1,22 @@
+<form id='form'>
+  <div><input type="text" placeholder="Email" name="email" id="email"></div>
+  <div><input type="password" placeholder="Password" name="password" id="password"></div>
+  <div><input type="text" placeholder="Email-check" name="email_check" id="email_check"></div>
+  <div><input type="submit" value="Submit"></div>
+
+  <div><a href="#forgot-password">Forgotten password</a></div>
+</form>
+
+<script>(function() {
+var form = document.getElementById('form')
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+  fetch("/login", { method: 'POST', body: new FormData(e.target)})
+    .then(function(response){
+      console.log(response);
+    })
+    .catch(function (error) {
+		  console.warn(error);
+	  });
+})
+})();</script>
