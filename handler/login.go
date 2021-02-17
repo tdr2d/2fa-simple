@@ -5,12 +5,28 @@ import (
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/session"
 	"github.com/sirupsen/logrus"
 )
+
+type Handler struct {
+	Conf  *utils.Config
+	Store *session.Store
+}
 
 type UserLogin struct {
 	Email    string `json:"email" form:"email"`
 	Password string `json:"password" form:"password"`
+}
+
+type UserLogin2 struct {
+	Code string `json:"code" form:"code"`
+}
+
+type ErrorUserPasswordNoMatch struct{}
+
+func (e *ErrorUserPasswordNoMatch) Error() string {
+	return "ErrorUserPasswordNoMatch"
 }
 
 const check_mail_template = `You attempted to login to Ecorp.co<br>
@@ -20,12 +36,30 @@ Regards,<br>
 <br>
 <small>Ecorp.co</small>`
 
-func LoginHandler(c *fiber.Ctx) error {
-	var err error
-	u := new(UserLogin)
+func (hand *Handler) GetSession(c *fiber.Ctx) *session.Session {
+	session, err := hand.Store.Get(c)
+	if err != nil {
+		panic(err)
+	}
+	return session
+}
 
-	if err = c.BodyParser(u); err != nil {
+func (hand *Handler) LoginPostHandler(c *fiber.Ctx) error {
+	session := hand.GetSession(c)
+	u := new(UserLogin)
+	if err := c.BodyParser(u); err != nil {
 		return err
+	}
+
+	configPasswordHash, err := hand.Conf.GetPasswordHashFromUserEmail(u.Email)
+	if err != nil {
+		return err
+	}
+
+	tmpPassword := utils.HashPassword(u.Password)
+	logrus.Info(tmpPassword)
+	if configPasswordHash != tmpPassword {
+		return new(ErrorUserPasswordNoMatch)
 	}
 
 	code, err := utils.GenerateOTP(5)
@@ -34,14 +68,27 @@ func LoginHandler(c *fiber.Ctx) error {
 		return err
 	}
 
+	session.Set("email", u.Email)
+	session.Set("login_code", code)
 	if err = utils.SendGrid(
-		utils.Recipient{Name: "Login Check", Mail: service_email}, // TODO parse config
-		utils.Recipient{Name: "", Mail: u.Email},
+		utils.MailUser{Name: "Login Check", Mail: hand.Conf.ServiceEmail},
+		utils.MailUser{Name: "", Mail: u.Email},
 		"Login Mail check",
 		fmt.Sprintf(check_mail_template, code)); err != nil {
 		logrus.Error(err)
 		return err
 	}
+	session.Save()
+	return c.SendString("ok")
+}
 
-	return c.SendString("Hello, World!")
+func (hand *Handler) LoginPostCheckHandler(c *fiber.Ctx) error {
+	session := hand.GetSession(c)
+	email := session.Get("email")
+	code := session.Get("code")
+	// TODO
+}
+
+func (hand *Handler) LoginGetHandler(c *fiber.Ctx) error {
+	return c.Render("login", fiber.Map{"Title": "Login"}, "layout")
 }

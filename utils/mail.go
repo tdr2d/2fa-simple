@@ -9,28 +9,12 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// type Config struct {
-// 	Host     string
-// 	Port     string
-// 	Password string
-// }
-
-// func SendHtmlMail(from string, to []string, subject string, html string, config Config) error {
-// 	auth := smtp.PlainAuth("", from, config.Password, config.Host)
-
-// 	var body bytes.Buffer
-// 	mimeHeaders := "MIME-version: 1.0;\nContent-Type: text/html; charset=\"UTF-8\";\n\n"
-// 	body.Write([]byte(fmt.Sprintf("Subject: This is a test subject \n%s\n\n", mimeHeaders)))
-
-// 	return smtp.SendMail(config.Host+":"+config.Port, auth, from, to, []byte(html))
-// }
-
-type Recipient struct {
+type MailUser struct {
 	Name string
 	Mail string
 }
 
-func SendGrid(from Recipient, to Recipient, subject string, content string) error {
+func SendGrid(from MailUser, to MailUser, subject string, content string) error {
 	f := mail.NewEmail(from.Name, from.Mail)
 	t := mail.NewEmail(to.Name, to.Mail)
 	message := mail.NewSingleEmail(f, subject, t, "", content)

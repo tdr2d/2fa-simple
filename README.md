@@ -8,8 +8,10 @@ Verification is done using a verification code sent by email
 
 
 # TODO:
-- config yml loader
-- session
-- design
+- login check 2
+- UI design
 - frontend form validation
 - reverse proxy for spa
+- compression
+- caching
+- cors/xss security
