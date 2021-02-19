@@ -1,3 +1,7 @@
+base_url: http://localhost:3000
+template_dir: "./templates"
+
+
 # Email sender
 service_email: service@ecorp.co
 company_name: E-corp
@@ -5,9 +9,8 @@ color: '#ffffff'
 
 # Users
 users:
-  - email: user1@example.com
-    # Bcrypted password
-    password: $2y$12$P/i4F4a0bDtagnYJR1aRru4y7Gf6c6eBzZBs3UmwDsCBXcMIEoxI6
+  - email: test@example.com
+    password: $2a$14$KQpl7DkFbyZ9WrqpLfI5L.5TtpQ0WehFKOzQbjX97ALWpF0oPbaW6 # 1234
     
-  - email: user2@example.com
-    password: $2y$12$P/i4F4a0bDtagnYJR1aRru4y7Gf6c6eBzZBs3UmwDsCBXcMIEoxI6
+  - email: thomas.webber78@gmail.com
+    password: $2a$14$mPFZutVj5fBIEr7rjEqH0u7hm/PD3XmlM.cLZjc3Hle664Rz4mJ.K

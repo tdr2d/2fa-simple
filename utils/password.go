@@ -6,7 +6,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-const otpChars = "123456789"
+const otpChars = "abcdefghijklmnopqrstuvwxyzABCDEFG123456789"
 
 func HashPassword(password string) string {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
@@ -14,6 +14,11 @@ func HashPassword(password string) string {
 		panic(err)
 	}
 	return string(bytes)
+}
+
+func CheckPasswordHash(password, hash string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
+	return err == nil
 }
 
 func GenerateOTP(length int) (string, error) {

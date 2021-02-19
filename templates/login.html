@@ -1,22 +1,68 @@
 <form id='form'>
-  <div><input type="text" placeholder="Email" name="email" id="email"></div>
-  <div><input type="password" placeholder="Password" name="password" id="password"></div>
-  <div><input type="text" placeholder="Email-check" name="email_check" id="email_check"></div>
-  <div><input type="submit" value="Submit"></div>
+  <div class="step-1"><input type="email" placeholder="Email" name="email" id="email"></div>
+  <div class="step-1"><input type="password" placeholder="Password" name="password" id="password"></div>
+  
+  <p class="hidden" id="form-error"></p>
+  <p class="hidden" id="form-info"></p>
 
-  <div><a href="#forgot-password">Forgotten password</a></div>
+  <div><button type="submit" value="Submit">Submit</button></div>
+  <div class="step-2 hidden"><button id="back-to-login" type="button">Back to login</button></div>
+  <div class="step-2 hidden"><button type="button">Resend validation code</button></div>
+  <div class="step-1"><a id="forgot-password" href="#forgot-password">Forgotten password</a></div>
 </form>
 
 <script>(function() {
-var form = document.getElementById('form')
-form.addEventListener('submit', function(e){
-  e.preventDefault();
-  fetch("/login", { method: 'POST', body: new FormData(e.target)})
-    .then(function(response){
-      console.log(response);
+var form = document.getElementById('form');
+var form_error = document.getElementById('form-error');
+var step_1_elements = document.querySelectorAll('.step1');
+var step_2_elements = document.querySelectorAll('.step2');
+var forgot_password = document.getElementById('forgot-password');
+var back_to_login = document.getElementById('back-to-login');
+
+function toggle_submit(toggle) {
+  form.querySelector('button[type="submit"]').disabled = toggle
+}
+
+function show_step1() {
+  step_1_elements.forEach(function(el) { el.classList.remove('hidden') });
+  step_2_elements.forEach(function(el) { el.classList.add('hidden') });
+}
+
+function show_step2() {
+  step_1_elements.forEach(function(el) { el.classList.add('hidden') });
+  step_2_elements.forEach(function(el) { el.classList.remove('hidden') });
+}
+
+function step1_fetch(e) {
+  form_error.classList.add('hidden');
+  fetch("/login", { method: 'POST', body: new FormData(e.target) })
+    .then(function(response, arg2){
+      if (!response.ok) {
+        form_error.innerText = response.Body().text;
+        form_error.classList.remove('hidden');
+      } else {
+        show_step2();
+      }
+      toggle_submit(true);
     })
     .catch(function (error) {
-		  console.warn(error);
+      console.error(error);
+      toggle_submit(true);
 	  });
-})
+}
+
+forgot_password.onclick = function(e) {
+  console.log("TODO forgot password");
+}
+
+back_to_login.onclick = function(e) {
+  show_step1();
+}
+
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+  toggle_submit(false)
+  step1_fetch(e)
+});
+
 })();</script>

@@ -6,6 +6,8 @@ type UserConfig struct {
 }
 
 type Config struct {
+	BaseUrl      string       `yaml:"base_url"`
+	TemplateDir  string       `yaml:"template_dir"`
 	ServiceEmail string       `yaml:"service_email"`
 	Color        string       `yaml:"color"`
 	CompanyName  string       `yaml:"company_name"`
@@ -15,7 +17,7 @@ type Config struct {
 type ErrorUserNotFound struct{}
 
 func (e *ErrorUserNotFound) Error() string {
-	return "User not found"
+	return "user_not_found"
 }
 
 func (conf *Config) GetPasswordHashFromUserEmail(user_email string) (string, error) {
@@ -27,16 +29,3 @@ func (conf *Config) GetPasswordHashFromUserEmail(user_email string) (string, err
 
 	return "", &ErrorUserNotFound{}
 }
-
-// Usage
-// import "github.com/ilyakaznacheev/cleanenv"
-// type Config struct {
-// 	Host         string `yaml:"host" env:"HOST" env-default:"localhost"`
-// 	Name         string `yaml:"name" env:"NAME" env-default:"postgres"`
-// 	User         string `yaml:"user" env:"USER" env-default:"user"`
-// 	Password     string `yaml:"password" env:"PASSWORD"`
-// }
-// var conf Config
-// if err := cleanenv.ReadEnv(&conf); err != nil {
-//     ...
-// }

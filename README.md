@@ -1,17 +1,27 @@
 # 2fa-simple
-Simple implementation of two-factor login flow using a local configuration for users
-Verification is done using a verification code sent by email
+Simple implementation of two-factor login flow using a local configuration for users. <br>
+Verification is done using a verification code sent by email.
 
 
 # Requirement
-- SendGrid api key `export SENDGRID_API_KEY='7OL816snJH6yjECp4eO_DT8'`
+- Environment:
+    - `export SENDGRID_API_KEY='7OL816snJH6yjECp4eO_DT8'`
 
 
 # TODO:
 - login check 2
+- forgot password
+- resend button
+- reverse proxy for spa
 - UI design
 - frontend form validation
-- reverse proxy for spa
+- i18n
+
+Optimizations:
 - compression
 - caching
 - cors/xss security
+
+
+Tests:
+- end to end tests

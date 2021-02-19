@@ -20,7 +20,7 @@ func init() {
 
 func main() {
 	conf := new(utils.Config)
-	if err := cleanenv.ReadEnv(conf); err != nil {
+	if err := cleanenv.ReadConfig("config.yml", conf); err != nil {
 		panic(err)
 	}
 	store := session.New(session.Config{CookieHTTPOnly: true, CookieSameSite: "true", Expiration: time.Hour})
@@ -43,12 +43,15 @@ func main() {
 	app.Use(logger.New())
 
 	// Routes
+	app.Get("/", hand.ContentGetHandler)
 	app.Get("/login", hand.LoginGetHandler)
-	app.Post("/login", hand.LoginPostHandler)
-	app.Post("/login-2", hand.LoginPostCheckHandler) // Step 2
+	app.Post("/login", hand.LoginPostHandler) // step 1
+	app.Post("/login/resend", hand.LoginResendHandler)
+	app.Get("/login-check/:code", hand.LoginCheckHandler) // Step 2
 	app.Post("/forgot-password", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, World!")
 	})
+
 	app.Static("/", "./web")
 	app.Listen(":3000")
 }
