@@ -9,17 +9,17 @@ Verification is done using a verification code sent by email.
 
 
 # TODO:
-- reverse proxy for spa
 - UI design
 - frontend form validation
 - forgot password
 - i18n
 
+
+Tests:
+- api end to end tests
+
+
 Optimizations:
 - compression
 - caching
 - cors/xss security
-
-
-Tests:
-- api end to end tests

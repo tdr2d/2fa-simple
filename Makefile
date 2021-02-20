@@ -1,2 +1,2 @@
 run:
-	source .sendgrid.env && go run .
+	source sendgrid.env && go run .

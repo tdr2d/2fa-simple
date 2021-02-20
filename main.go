@@ -23,6 +23,7 @@ func main() {
 	if err := cleanenv.ReadConfig("config.yml", conf); err != nil {
 		panic(err)
 	}
+	conf.TemplateDir = "templates"
 	store := session.New(session.Config{CookieHTTPOnly: true, CookieSameSite: "true", Expiration: time.Hour})
 	handler := handlers.Handler{Conf: conf, Store: store}
 	engine := html.New("./templates", ".html")
@@ -43,7 +44,6 @@ func main() {
 	app.Use(logger.New())
 
 	// Routes
-	app.Get("/", handler.ContentGetHandler)
 	app.Get("/login", handler.LoginGetHandler)
 	app.Post("/login", handler.LoginPostHandler)
 	app.Post("/login/resend", handler.LoginResendHandler)
@@ -53,6 +53,7 @@ func main() {
 		return c.SendString("Hello, World!")
 	})
 
-	app.Static("/", "./web")
+	app.Get("/*", handler.SpaGetHandler)
+	app.Static("/2fa-web", "./2fa-web")
 	app.Listen(":3000")
 }
