@@ -1,27 +1,27 @@
 <form id='form'>
-  <div class="step-1"><input type="email" placeholder="Email" name="email" id="email"></div>
-  <div class="step-1"><input type="password" placeholder="Password" name="password" id="password"></div>
+  <h2>Login Form</h2>
+  <div class="step1"><input type="email" placeholder="Email" name="email" id="email"></div>
+  <div class="step1"><input type="password" placeholder="Password" name="password" id="password"></div>
   
-  <p class="hidden" id="form-error"></p>
+  <p class="hidden red" id="form-error"></p>
   <p class="hidden" id="form-info"></p>
 
-  <div><button type="submit" value="Submit">Submit</button></div>
-  <div class="step-2 hidden"><button id="back-to-login" type="button">Back to login</button></div>
-  <div class="step-2 hidden"><button type="button">Resend validation code</button></div>
-  <div class="step-1"><a id="forgot-password" href="#forgot-password">Forgotten password</a></div>
+  <div class="step1"><button id="form-submit" type="submit" value="Submit">Submit</button></div>
+  <div class="step2 hidden"><button id="back-to-login" type="button">Back to login</button></div>
+  <div class="step2 hidden"><button id="resend-validation" type="button">Resend validation code</button></div>
+  <div class="step1"><a id="forgot-password" href="#forgot-password">Forgotten password</a></div>
 </form>
 
 <script>(function() {
 var form = document.getElementById('form');
 var form_error = document.getElementById('form-error');
+var form_info = document.getElementById('form-info');
+var form_submit = document.getElementById('form-submit');
 var step_1_elements = document.querySelectorAll('.step1');
 var step_2_elements = document.querySelectorAll('.step2');
 var forgot_password = document.getElementById('forgot-password');
 var back_to_login = document.getElementById('back-to-login');
-
-function toggle_submit(toggle) {
-  form.querySelector('button[type="submit"]').disabled = toggle
-}
+var resend_validation = document.getElementById('resend-validation');
 
 function show_step1() {
   step_1_elements.forEach(function(el) { el.classList.remove('hidden') });
@@ -33,36 +33,56 @@ function show_step2() {
   step_2_elements.forEach(function(el) { el.classList.remove('hidden') });
 }
 
-function step1_fetch(e) {
-  form_error.classList.add('hidden');
-  fetch("/login", { method: 'POST', body: new FormData(e.target) })
-    .then(function(response, arg2){
-      if (!response.ok) {
-        form_error.innerText = response.Body().text;
-        form_error.classList.remove('hidden');
-      } else {
-        show_step2();
-      }
-      toggle_submit(true);
-    })
-    .catch(function (error) {
-      console.error(error);
-      toggle_submit(true);
-	  });
-}
-
+// Forgot password
 forgot_password.onclick = function(e) {
   console.log("TODO forgot password");
 }
 
-back_to_login.onclick = function(e) {
-  show_step1();
+// Back to login
+back_to_login.onclick = function(e) { show_step1() }
+
+// Form resend code
+resend_validation.onclick = function(e) {
+  resend_validation.disabled = true;
+  fetch('/login/resend', { method: 'POST' })
+    .then(function(response){
+      if (!response.ok) {
+        response.text().then(function(data){
+          form_error.innerText = data;
+          form_error.classList.remove('hidden');
+        })
+      } else {
+        form_info.innerText = 'validation_email_resent';
+        form_info.classList.remove('hidden');
+      }
+    }).catch(function(error){
+      console.error(error);
+      resend_validation.disabled = false;
+    });
 }
 
+// Form submit
 form.addEventListener('submit', function(e){
   e.preventDefault();
-  toggle_submit(false)
-  step1_fetch(e)
+  form_error.classList.add('hidden');
+  form_submit.disabled = true;
+  resend_validation.disabled = false;
+  fetch("/login", { method: 'POST', body: new FormData(e.target) })
+    .then(function(response){
+      if (!response.ok) {
+        response.text().then(function(data) {
+          form_error.innerText = data;
+          form_error.classList.remove('hidden');
+        });
+      } else {
+        show_step2();
+      }
+      form_submit.disabled = false;
+    })
+    .catch(function (error) {
+      console.error(error);
+      form_submit.disabled = false;
+	  });
 });
 
 })();</script>

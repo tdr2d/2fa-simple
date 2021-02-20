@@ -1,5 +1,5 @@
 base_url: http://localhost:3000
-template_dir: "./templates"
+template_dir: "templates"
 
 
 # Email sender
@@ -9,8 +9,8 @@ color: '#ffffff'
 
 # Users
 users:
-  - email: test@example.com
+  # - email: test@example.com
+  #   password: $2a$14$mPFZutVj5fBIEr7rjEqH0u7hm/PD3XmlM.cLZjc3Hle664Rz4mJ.K
+  - email: webber.thomas78@gmail.com
     password: $2a$14$KQpl7DkFbyZ9WrqpLfI5L.5TtpQ0WehFKOzQbjX97ALWpF0oPbaW6 # 1234
-    
-  - email: thomas.webber78@gmail.com
-    password: $2a$14$mPFZutVj5fBIEr7rjEqH0u7hm/PD3XmlM.cLZjc3Hle664Rz4mJ.K
+

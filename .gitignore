@@ -15,5 +15,6 @@
 # vendor/
 sendgrid.env
 
+*.bin binary
 
 .DS_Store

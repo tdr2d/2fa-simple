@@ -9,12 +9,10 @@ Verification is done using a verification code sent by email.
 
 
 # TODO:
-- login check 2
-- forgot password
-- resend button
 - reverse proxy for spa
 - UI design
 - frontend form validation
+- forgot password
 - i18n
 
 Optimizations:
@@ -24,4 +22,4 @@ Optimizations:
 
 
 Tests:
-- end to end tests
+- api end to end tests

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"2fa-simple/handler"
+	"2fa-simple/handlers"
 	"2fa-simple/utils"
 	"time"
 
@@ -24,31 +24,32 @@ func main() {
 		panic(err)
 	}
 	store := session.New(session.Config{CookieHTTPOnly: true, CookieSameSite: "true", Expiration: time.Hour})
-	hand := handler.Handler{Conf: conf, Store: store}
+	handler := handlers.Handler{Conf: conf, Store: store}
 	engine := html.New("./templates", ".html")
 	engine.Reload(true)
 
 	// Middlewares
 	app := fiber.New(fiber.Config{Views: engine})
-	app.Use(func(c *fiber.Ctx) error {
-		c.Set("X-XSS-Protection", "1; mode=block")
-		c.Set("X-Content-Type-Options", "nosniff")
-		c.Set("X-Download-Options", "noopen")
-		c.Set("Strict-Transport-Security", "max-age=5184000")
-		c.Set("X-Frame-Options", "SAMEORIGIN")
-		c.Set("X-DNS-Prefetch-Control", "off")
-		return c.Next()
-	})
+	// app.Use(func(c *fiber.Ctx) error {
+	// 	c.Set("X-XSS-Protection", "1; mode=block")
+	// 	c.Set("X-Content-Type-Options", "nosniff")
+	// 	c.Set("X-Download-Options", "noopen")
+	// 	c.Set("Strict-Transport-Security", "max-age=5184000")
+	// 	c.Set("X-Frame-Options", "SAMEORIGIN")
+	// 	c.Set("X-DNS-Prefetch-Control", "off")
+	// 	return c.Next()
+	// })
 	app.Use(recover.New())
 	app.Use(logger.New())
 
 	// Routes
-	app.Get("/", hand.ContentGetHandler)
-	app.Get("/login", hand.LoginGetHandler)
-	app.Post("/login", hand.LoginPostHandler) // step 1
-	app.Post("/login/resend", hand.LoginResendHandler)
-	app.Get("/login-check/:code", hand.LoginCheckHandler) // Step 2
-	app.Post("/forgot-password", func(c *fiber.Ctx) error {
+	app.Get("/", handler.ContentGetHandler)
+	app.Get("/login", handler.LoginGetHandler)
+	app.Post("/login", handler.LoginPostHandler)
+	app.Post("/login/resend", handler.LoginResendHandler)
+	app.Get("/login-check/:code", handler.LoginCheckHandler)
+	app.Get("/logout", handler.LogoutGetHandler)
+	app.Post("/password-reset", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, World!")
 	})
 
