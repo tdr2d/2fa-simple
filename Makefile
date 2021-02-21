@@ -1,5 +1,5 @@
 run:
-	source sendgrid.env && go run .
+	go run .
 
 clean:
 	rm -rf data

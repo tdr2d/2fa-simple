@@ -17,6 +17,7 @@ type Config struct {
 	SpaFallback    string `yaml:"spa_fallback"`
 	SqliteDatabase string `yaml:"sqlite_database"`
 
+	Website      string `yaml:"website"`
 	ServiceEmail string `yaml:"service_email"`
 	Color        string `yaml:"color"`
 	CompanyName  string `yaml:"company_name"`
@@ -30,14 +31,32 @@ func (e *ErrorUserNotFound) Error() string {
 	return "user_not_found"
 }
 
+func (conf *Config) UserExists(user_email string) bool {
+	for _, u := range conf.Users {
+		if u.Email == user_email {
+			return true
+		}
+	}
+	return false
+}
+
 func (conf *Config) GetPasswordHashFromUserEmail(user_email string) (string, error) {
 	for _, u := range conf.Users {
 		if u.Email == user_email {
 			return u.Password, nil
 		}
 	}
-
 	return "", &ErrorUserNotFound{}
+}
+
+func (conf *Config) ChangePassword(user_email string, password_hash string) error {
+	for _, u := range conf.Users {
+		if u.Email == user_email {
+			u.Password = password_hash
+			return nil
+		}
+	}
+	return &ErrorUserNotFound{}
 }
 
 func (conf *Config) EnsureFilesExist() error {
@@ -56,4 +75,8 @@ func TouchFile(name string) error {
 		return err
 	}
 	return file.Close()
+}
+
+func WriteYaml() {
+
 }

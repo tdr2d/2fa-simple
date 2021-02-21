@@ -62,9 +62,10 @@ func main() {
 	app.Post("/login/resend", handler.LoginResendHandler)
 	app.Get("/login-check/:code", handler.LoginCheckHandler)
 	app.Get("/logout", handler.LogoutGetHandler)
-	app.Post("/password-reset", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World!")
-	})
+	app.Get("/password-reset", handler.PasswordResetGet)
+	app.Post("/password-reset", handler.PasswordResetPost)
+	app.Get("/password-change/:code", handler.PasswordChangeGet)
+	app.Post("/password-change/:code", handler.PasswordChangePost)
 
 	app.Get("/*", handler.SpaGetHandler)
 	app.Listen(":3000")

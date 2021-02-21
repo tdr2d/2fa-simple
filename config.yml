@@ -4,6 +4,7 @@ spa_fallback: index.html
 sqlite_database: data/fiber.sqlite3
 
 # Email sender
+website: example.com
 service_email: service@ecorp.co
 company_name: E-corp
 color: '#ffffff'

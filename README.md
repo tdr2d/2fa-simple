@@ -14,6 +14,8 @@ Act as an http server for Login to any Single Page Application <br>
 - reset config url
 - UI design
 - frontend form validation
+- error template
+- graceful stop/restart
 - i18n
 
 

@@ -1,7 +1,7 @@
-<form id='form'>
+<form id="form-login">
   <h2>Login Form</h2>
-  <div class="step1"><input type="email" placeholder="Email" name="email" id="email"></div>
-  <div class="step1"><input type="password" placeholder="Password" name="password" id="password"></div>
+  <div class="step1"><input type="email" placeholder="Email" name="email" id="email" placeholder="email@example.com"></div>
+  <div class="step1"><input type="password" placeholder="Password" name="password" id="password" placeholder="password"></div>
   
   <p class="hidden red" id="form-error"></p>
   <p class="hidden" id="form-info"></p>
@@ -9,11 +9,11 @@
   <div class="step1"><button id="form-submit" type="submit" value="Submit">Submit</button></div>
   <div class="step2 hidden"><button id="back-to-login" type="button">Back to login</button></div>
   <div class="step2 hidden"><button id="resend-validation" type="button">Resend validation code</button></div>
-  <div class="step1"><a id="forgot-password" href="#forgot-password">Forgotten password</a></div>
+  <div class="step1"><a id="forgot-password" href="/password-reset">Forgotten password</a></div>
 </form>
 
 <script>(function() {
-var form = document.getElementById('form');
+var form = document.getElementById('form-login');
 var form_error = document.getElementById('form-error');
 var form_info = document.getElementById('form-info');
 var form_submit = document.getElementById('form-submit');
