@@ -1,8 +1,11 @@
 package utils
 
 import (
+	"io/ioutil"
 	"os"
 	"path/filepath"
+
+	yaml "gopkg.in/yaml.v2"
 )
 
 type UserConfig struct {
@@ -50,9 +53,9 @@ func (conf *Config) GetPasswordHashFromUserEmail(user_email string) (string, err
 }
 
 func (conf *Config) ChangePassword(user_email string, password_hash string) error {
-	for _, u := range conf.Users {
+	for i, u := range conf.Users {
 		if u.Email == user_email {
-			u.Password = password_hash
+			conf.Users[i].Password = password_hash
 			return nil
 		}
 	}
@@ -77,6 +80,16 @@ func TouchFile(name string) error {
 	return file.Close()
 }
 
-func WriteYaml() {
-
+func WriteYaml(in interface{}, outputfile string) error {
+	out, err := yaml.Marshal(in)
+	if err != nil {
+		return err
+	}
+	if err := TouchFile(outputfile); err != nil {
+		return err
+	}
+	if err := ioutil.WriteFile(outputfile, out, 0644); err != nil {
+		return err
+	}
+	return nil
 }

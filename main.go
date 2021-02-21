@@ -3,6 +3,8 @@ package main
 import (
 	"2fa-simple/handlers"
 	"2fa-simple/utils"
+	"os"
+	"os/signal"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -43,6 +45,13 @@ func main() {
 
 	// Middlewares
 	app := fiber.New(fiber.Config{Views: engine})
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+	go func() {
+		_ = <-c
+		logrus.Info("Gracefully shutting down...")
+		_ = app.Shutdown()
+	}()
 	app.Use(func(c *fiber.Ctx) error {
 		c.Set("X-XSS-Protection", "1; mode=block")
 		c.Set("X-Content-Type-Options", "nosniff")

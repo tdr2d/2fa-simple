@@ -1,0 +1,18 @@
+base_url: http://localhost:3000
+spa_directory: web-spa
+spa_fallback: index.html
+sqlite_database: data/fiber.sqlite3
+
+# Email sender
+website: example.com
+service_email: service@ecorp.co
+company_name: E-corp
+color: '#ffffff'
+
+# Users
+users:
+  - email: test@example.com
+    password: $2a$14$mPFZutVj5fBIEr7rjEqH0u7hm/PD3XmlM.cLZjc3Hle664Rz4mJ.K
+  - email: webber.thomas78@gmail.com
+    password: $2a$14$KQpl7DkFbyZ9WrqpLfI5L.5TtpQ0WehFKOzQbjX97ALWpF0oPbaW6
+

@@ -104,7 +104,9 @@ func (handler *Handler) PasswordChangePost(c *fiber.Ctx) error {
 		return err
 	}
 	logrus.Info("New Password " + email + " " + hash)
-	// TODO write yaml yaml "gopkg.in/yaml.v2"
+	utils.WriteYaml(&handler.Conf, "config.yml")
+
+	// TODO write yaml yaml
 	session.Set("login_date_unix", int(time.Now().Unix()))
 	session.Delete("password_change_code")
 	session.Delete("password_change_code_expiration")

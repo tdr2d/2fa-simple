@@ -10,8 +10,6 @@ Act as an http server for Login to any Single Page Application <br>
 
 
 # TODO:
-- forgot password
-- reset config url
 - UI design
 - frontend form validation
 - error template
