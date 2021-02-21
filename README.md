@@ -1,17 +1,19 @@
-# 2fa-simple
-Simple implementation of two-factor login flow using a local configuration for users. <br>
-Verification is done using a verification code sent by email.
-
+# 2fa-simple 
+Go Simple implementation of two-factor login flow using a local configuration for users. <br>
+Verification is done using a verification code sent by email. <br>
+Act as an http server for Login to any Single Page Application <br>
 
 # Requirement
+- go 1.14+
 - Environment:
     - `export SENDGRID_API_KEY='7OL816snJH6yjECp4eO_DT8'`
 
 
 # TODO:
+- forgot password
+- reset config url
 - UI design
 - frontend form validation
-- forgot password
 - i18n
 
 

@@ -106,6 +106,7 @@ func (handler *Handler) LoginCheckHandler(c *fiber.Ctx) error {
 	session.Set("login_date_unix", int(time.Now().Unix()))
 	session.Delete("login_code")
 	session.Delete("login_code_expiration")
+	session.Save()
 	return c.Redirect("/")
 }
 
