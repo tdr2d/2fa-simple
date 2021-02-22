@@ -1,6 +1,12 @@
 run:
 	go run .
 
+tailwind:
+	cd web-2fa && npm run build
+
+tailwind_prod:
+	cd web-2fa && npm run build_prod
+
 clean:
 	rm -rf data
 

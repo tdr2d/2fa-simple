@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/recover"
 	"github.com/gofiber/fiber/v2/middleware/session"
 	"github.com/gofiber/storage/sqlite3"
@@ -54,7 +53,7 @@ func main() {
 	}()
 	app.Use(func(c *fiber.Ctx) error {
 		c.Set("X-XSS-Protection", "1; mode=block")
-		c.Set("X-Content-Type-Options", "nosniff")
+		// c.Set("X-Content-Type-Options", "nosniff") // Blocks .css
 		c.Set("X-Download-Options", "noopen")
 		c.Set("Strict-Transport-Security", "max-age=5184000")
 		c.Set("X-Frame-Options", "SAMEORIGIN")
@@ -62,10 +61,10 @@ func main() {
 		return c.Next()
 	})
 	app.Use(recover.New())
-	app.Use(logger.New())
+	// app.Use(logger.New())
 
 	// Routes
-	app.Static("/2fa-web", "./2fa-web")
+	app.Static("/web-2fa", "./web-2fa")
 	app.Get("/login", handler.LoginGetHandler)
 	app.Post("/login", handler.LoginPostHandler)
 	app.Post("/login/resend", handler.LoginResendHandler)

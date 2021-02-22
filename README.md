@@ -7,6 +7,7 @@ Act as an http server for Login to any Single Page Application <br>
 - go 1.14+
 - Environment:
     - `export SENDGRID_API_KEY='7OL816snJH6yjECp4eO_DT8'`
+- node/npm
 
 
 # TODO:

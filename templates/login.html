@@ -1,16 +1,37 @@
-<form id="form-login">
-  <h2>Login Form</h2>
-  <div class="step1"><input type="email" placeholder="Email" name="email" id="email" placeholder="email@example.com"></div>
-  <div class="step1"><input type="password" placeholder="Password" name="password" id="password" placeholder="password"></div>
-  
-  <p class="hidden red" id="form-error"></p>
-  <p class="hidden" id="form-info"></p>
+<div class="max-w-md w-full space-y-8">
 
-  <div class="step1"><button id="form-submit" type="submit" value="Submit">Submit</button></div>
+  <img class="m-auto" src="/web-2fa/img/logo.png">
+
+  <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Login Form</h2>
+
+<form class="" id="form-login">
+  <div class="step1">
+    <input class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+           type="email" placeholder="Email" name="email" id="email" placeholder="email@example.com">
+  </div>
+  <div class="step1">
+    <input class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+           type="password" placeholder="Password" name="password" id="password" placeholder="password">
+  </div>
+  <br>
+  <p class="hidden text-red-500 pb-2" id="form-error"></p>
+  <p class="hidden pb-2" id="form-info"></p>
+
+  <button type="submit" id="form-submit" class="step1 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+    <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+      <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" x-description="Heroicon name: solid/lock-closed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+<path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+</svg>
+    </span>
+    Log in
+  </button>
+
   <div class="step2 hidden"><button id="back-to-login" type="button">Back to login</button></div>
   <div class="step2 hidden"><button id="resend-validation" type="button">Resend validation code</button></div>
-  <div class="step1"><a id="forgot-password" href="/password-reset">Forgotten password</a></div>
+  <div class="step1 py-2"><a class="font-medium text-indigo-600 hover:text-indigo-500 text-sm" id="forgot-password" href="/password-reset">Forgotten your password?</a></div>
 </form>
+
+</div>
 
 <script>(function() {
 var form = document.getElementById('form-login');

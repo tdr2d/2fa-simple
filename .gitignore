@@ -4,6 +4,7 @@
 *.dll
 *.so
 *.dylib
+*.min.css
 
 # Test binary, built with `go test -c`
 *.test
@@ -21,3 +22,5 @@ sendgrid.env
 
 data/
 *.sqlite3
+
+node_modules/

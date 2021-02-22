@@ -5,23 +5,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{.Title}}</title>
-
-    <link rel="apple-touch-icon" sizes="180x180" href="/2fa-web/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/2fa-web/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/2fa-web/favicon/favicon-16x16.png">
-    <!-- <link rel="manifest" href="/2fa-web/favicon/site.webmanifest"> -->
+    <link rel="stylesheet" href="/web-2fa/css/tailwind.min.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/web-2fa/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/web-2fa/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/web-2fa/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/web-2fa/favicon/site.webmanifest">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
-    <style>
-        .hidden { display: none !important }
-        .red { color: #e60707 }
-    </style>
 </head>
-<body>
+<body class="h-screen">
 <!--[if IE]>
 <p>Sorry, Internet Explorer is not supported.<p>
 Use <a href="http://firefox.com">Firefox</a> or <a href="https://www.google.com/chrome/">Google Chrome</a> instead.
 <![endif]-->
+<main class="h-screen flex justify-center items-center">
 {{embed}}
+</main>
 </body>
 </html>
