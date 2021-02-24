@@ -11,7 +11,7 @@ import (
 )
 
 func (handler *Handler) PasswordResetGet(c *fiber.Ctx) error {
-	return c.Render("password_reset", fiber.Map{"Title": "Password Reset"}, "layout")
+	return c.Render("password_reset", fiber.Map{"Title": "Password Reset", "lang": handler.Conf.Language}, "layout")
 }
 
 type PasswordResetForm struct {
@@ -40,6 +40,7 @@ func (handler *Handler) PasswordResetPost(c *fiber.Ctx) error {
 		"Website": handler.Conf.Website,
 		"Link":    fmt.Sprintf("%s/password-change/%s", handler.Conf.BaseUrl, code),
 		"Company": handler.Conf.CompanyName,
+		"lang":    handler.Conf.Language,
 	}
 	password_reset_mail, err := utils.RenderTemplate(handler.Conf.TemplateDir+"/mail/change_password.html", data)
 	if err != nil {
@@ -65,20 +66,18 @@ func (handler *Handler) PasswordChangeGet(c *fiber.Ctx) error {
 		return fiber.ErrUnauthorized
 	}
 	if int(time.Now().Unix()) > session.Get("password_change_code_expiration").(int) {
-		c.SendStatus(fiber.StatusUnauthorized)
-		return c.SendString("code_expired")
+		return c.Status(fiber.StatusUnauthorized).SendString("code_expired")
 	}
 
 	if c.Params("code") != session.Get("password_change_code").(string) {
-		c.SendStatus(fiber.StatusUnauthorized)
-		return c.SendString("code_invalid")
+		return c.Status(fiber.StatusUnauthorized).SendString("code_invalid")
 	}
 
-	return c.Render("password_change", fiber.Map{"Title": "Password Change"}, "layout")
+	return c.Render("password_change", fiber.Map{"Title": "Password Change", "lang": handler.Conf.Language}, "layout")
 }
 
 type PasswordChangeForm struct {
-	NewPassword      string `json:"newpassword" form:"newpasswordcheck"`
+	NewPassword      string `json:"newpassword" form:"newpassword"`
 	NewPasswordCheck string `json:"newpasswordcheck" form:"newpasswordcheck"`
 }
 
@@ -89,13 +88,18 @@ func (handler *Handler) PasswordChangePost(c *fiber.Ctx) error {
 		return err
 	}
 
+	logrus.Info(form.NewPassword)
+	logrus.Info(form.NewPasswordCheck)
+	if form.NewPassword != form.NewPasswordCheck {
+		return c.Status(fiber.StatusBadRequest).SendString("Passwords are not identical")
+	}
+
 	session := handler.GetSession(c)
 	if session.Get("email") == nil || session.Get("password_change_code") == nil || session.Get("password_change_code_expiration") == nil {
 		return fiber.ErrUnauthorized
 	}
 	if int(time.Now().Unix()) > session.Get("password_change_code_expiration").(int) {
-		c.SendStatus(fiber.StatusUnauthorized)
-		return c.SendString("code_expired")
+		return c.Status(fiber.StatusUnauthorized).SendString("code_expired")
 	}
 
 	email := strings.TrimSpace(session.Get("email").(string))

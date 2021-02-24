@@ -33,6 +33,7 @@ func (handler *Handler) sendLoginCheckMail(session *session.Session, email strin
 		"Website": handler.Conf.Website,
 		"Link":    fmt.Sprintf("%s/login-check/%s", handler.Conf.BaseUrl, code),
 		"Company": handler.Conf.CompanyName,
+		"lang":    handler.Conf.Language,
 	}
 	login_check_content, err := utils.RenderTemplate(fmt.Sprintf("%s/mail/login_check.html", handler.Conf.TemplateDir), data)
 	if err != nil {
@@ -62,8 +63,7 @@ func (handler *Handler) LoginPostHandler(c *fiber.Ctx) error {
 	}
 
 	if !utils.CheckPasswordHash(u.Password, configPasswordHash) {
-		c.SendStatus(fiber.StatusUnauthorized)
-		return c.SendString("user_password_mismatch")
+		return c.Status(fiber.StatusUnauthorized).SendString("user_password_mismatch")
 	}
 	session.Set("email", strings.TrimSpace(u.Email))
 	if err := handler.sendLoginCheckMail(session, strings.TrimSpace(u.Email)); err != nil {
@@ -76,8 +76,7 @@ func (handler *Handler) LoginPostHandler(c *fiber.Ctx) error {
 func (handler *Handler) LoginResendHandler(c *fiber.Ctx) error {
 	session := handler.GetSession(c)
 	if session.Get("email") == nil || session.Get("login_code") == nil || session.Get("login_code_expiration") == nil {
-		c.SendStatus(fiber.StatusUnauthorized)
-		return c.SendString("email_code_code_expiration_undefined")
+		return c.Status(fiber.StatusUnauthorized).SendString("email_code_code_expiration_undefined")
 	}
 	if err := handler.sendLoginCheckMail(session, strings.TrimSpace(session.Get("email").(string))); err != nil {
 		return err
@@ -89,18 +88,15 @@ func (handler *Handler) LoginResendHandler(c *fiber.Ctx) error {
 func (handler *Handler) LoginCheckHandler(c *fiber.Ctx) error {
 	session := handler.GetSession(c)
 	if session.Get("email") == nil || session.Get("login_code") == nil || session.Get("login_code_expiration") == nil {
-		c.SendStatus(fiber.StatusUnauthorized)
-		return c.SendString("email_code_code_expiration_undefined")
+		return c.Status(fiber.StatusUnauthorized).SendString("email_code_code_expiration_undefined")
 	}
 
 	if int(time.Now().Unix()) > session.Get("login_code_expiration").(int) {
-		c.SendStatus(fiber.StatusUnauthorized)
-		return c.SendString("code_expired")
+		return c.Status(fiber.StatusUnauthorized).SendString("code_expired")
 	}
 
 	if c.Params("code") != session.Get("login_code").(string) {
-		c.SendStatus(fiber.StatusUnauthorized)
-		return c.SendString("code_invalid")
+		return c.Status(fiber.StatusUnauthorized).SendString("code_invalid")
 	}
 
 	session.Set("login_date_unix", int(time.Now().Unix()))
@@ -111,7 +107,7 @@ func (handler *Handler) LoginCheckHandler(c *fiber.Ctx) error {
 }
 
 func (handler *Handler) LoginGetHandler(c *fiber.Ctx) error {
-	return c.Render("login", fiber.Map{"Title": "Login"}, "layout")
+	return c.Render("login", fiber.Map{"Title": "Login", "lang": handler.Conf.Language}, "layout")
 }
 
 func (handler *Handler) LogoutGetHandler(c *fiber.Ctx) error {

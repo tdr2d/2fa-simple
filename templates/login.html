@@ -1,23 +1,23 @@
 <div class="max-w-md w-full space-y-8">
 
-  <img class="m-auto" src="/web-2fa/img/logo.png">
+  <img class="mx-auto" src="/web-2fa/img/logo.png">
 
-  <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Login Form</h2>
+  <h2 class="mt-6 text-center text-3xl font-bold text-gray-900">Login Form</h2>
 
 <form class="" id="form-login">
   <div class="step1">
-    <input class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+    <input class="mb-1 appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
            type="email" placeholder="Email" name="email" id="email" placeholder="email@example.com">
   </div>
   <div class="step1">
-    <input class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+    <input class="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
            type="password" placeholder="Password" name="password" id="password" placeholder="password">
   </div>
   <br>
-  <p class="hidden text-red-500 pb-2" id="form-error"></p>
-  <p class="hidden pb-2" id="form-info"></p>
+  <p class="hidden text-red-500 mb-2" id="form-error"></p>
+  <p class="hidden mb-2 text-center" id="form-info"></p>
 
-  <button type="submit" id="form-submit" class="step1 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+  <button type="submit" id="form-submit" class="step1 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 disabled:opacity-50 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
     <span class="absolute left-0 inset-y-0 flex items-center pl-3">
       <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" x-description="Heroicon name: solid/lock-closed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
 <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
@@ -26,14 +26,22 @@
     Log in
   </button>
 
-  <div class="step2 hidden"><button id="back-to-login" type="button">Back to login</button></div>
-  <div class="step2 hidden"><button id="resend-validation" type="button">Resend validation code</button></div>
+  <div class="mb-1 step2 hidden">
+    <button class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 disabled:opacity-50 hover:bg-indigo-700  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="back-to-login" type="button">
+      <span class="absolute left-0 inset-y-0 flex items-center pl-3"><svg class="fill-current" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg></span>
+      Back to login
+    </button>
+  </div>
+  <div class="step2 hidden">
+    <button class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 disabled:opacity-50 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="resend-validation" type="button">Resend validation code</button>
+  </div>
   <div class="step1 py-2"><a class="font-medium text-indigo-600 hover:text-indigo-500 text-sm" id="forgot-password" href="/password-reset">Forgotten your password?</a></div>
 </form>
 
 </div>
 
 <script>(function() {
+var STEP_2_TEXT = "<b>Two factor verification</b>: Continue login using the link sent by email";
 var form = document.getElementById('form-login');
 var form_error = document.getElementById('form-error');
 var form_info = document.getElementById('form-info');
@@ -45,11 +53,14 @@ var back_to_login = document.getElementById('back-to-login');
 var resend_validation = document.getElementById('resend-validation');
 
 function show_step1() {
+  form_info.classList.add('hidden');
   step_1_elements.forEach(function(el) { el.classList.remove('hidden') });
   step_2_elements.forEach(function(el) { el.classList.add('hidden') });
 }
 
 function show_step2() {
+  form_info.innerHTML = STEP_2_TEXT;
+  form_info.classList.remove('hidden');
   step_1_elements.forEach(function(el) { el.classList.add('hidden') });
   step_2_elements.forEach(function(el) { el.classList.remove('hidden') });
 }

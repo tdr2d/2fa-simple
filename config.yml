@@ -1,14 +1,15 @@
 base_url: http://localhost:3000
+language: fr
 template_dir: templates
 spa_directory: web-spa
 spa_fallback: index.html
 sqlite_database: data/fiber.sqlite3
 website: example.com
 service_email: service@ecorp.co
-color: '#ffffff'
 company_name: E-corp
+
 users:
 - email: test@example.com
   password: $2a$14$mPFZutVj5fBIEr7rjEqH0u7hm/PD3XmlM.cLZjc3Hle664Rz4mJ.K
 - email: webber.thomas78@gmail.com
-  password: $2a$14$pWrCm2NcXAMokVStwo0svuaDdbxvr1M5Qy9bmjJAEm2Px.M.ttZ4y
+  password: $2a$14$5A0GhxoSZNi.40hxnAQXFOVEOU9K996elzv73s1.rlnEHT3rEPkiO

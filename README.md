@@ -2,6 +2,7 @@
 Go Simple implementation of two-factor login flow using a local configuration for users. <br>
 Verification is done using a verification code sent by email. <br>
 Act as an http server for Login to any Single Page Application <br>
+TailwindCss is used for the Web-UI<br>
 
 # Requirement
 - go 1.14+
@@ -11,11 +12,8 @@ Act as an http server for Login to any Single Page Application <br>
 
 
 # TODO:
-- UI design
-- frontend form validation
-- error template
-- graceful stop/restart
 - i18n
+- docker
 
 
 Tests:
@@ -23,6 +21,7 @@ Tests:
 
 
 Optimizations:
+- error page template
 - compression
 - caching
 - cors/xss security

@@ -40,6 +40,10 @@ func main() {
 	store.RegisterType(1)
 	handler := handlers.Handler{Conf: conf, Store: store}
 	engine := html.New("./templates", ".html")
+	// engine.Debug(true)
+	engine.AddFunc("trans", func(lang string, key string) string {
+		return utils.GetLocalizer(lang).Translate(key)
+	})
 	engine.Reload(true)
 
 	// Middlewares

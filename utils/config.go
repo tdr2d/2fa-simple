@@ -15,6 +15,7 @@ type UserConfig struct {
 
 type Config struct {
 	BaseUrl        string `yaml:"base_url"`
+	Language       string `yaml:"language"`
 	TemplateDir    string `yaml:"template_dir"`
 	SpaDirectory   string `yaml:"spa_directory"`
 	SpaFallback    string `yaml:"spa_fallback"`
@@ -22,7 +23,6 @@ type Config struct {
 
 	Website      string `yaml:"website"`
 	ServiceEmail string `yaml:"service_email"`
-	Color        string `yaml:"color"`
 	CompanyName  string `yaml:"company_name"`
 
 	Users []UserConfig `yaml:"users"`
