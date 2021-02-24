@@ -1,28 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{.lang}}">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{.Title}}</title>
-    <link rel="stylesheet" href="/web-2fa/css/tailwind.min.css">
-    <link rel="apple-touch-icon" sizes="180x180" href="/web-2fa/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/web-2fa/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/web-2fa/favicon/favicon-16x16.png">
-    <link rel="manifest" href="/web-2fa/favicon/site.webmanifest">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{.Title}}</title>
+  <link rel="stylesheet" href="/web-2fa/css/tailwind.min.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="/web-2fa/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/web-2fa/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/web-2fa/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/web-2fa/favicon/site.webmanifest">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
 </head>
 
-<body class="h-screen">
-    <!--[if IE]>
+<body class="flex flex-col h-screen">
+<!--[if IE]>
 <p>Sorry, Internet Explorer is not supported.<p>
 Use <a href="http://firefox.com">Firefox</a> or <a href="https://www.google.com/chrome/">Google Chrome</a> instead.
 <![endif]-->
-    <main class="h-screen flex justify-center items-center px-2">
-        {{embed}}
-    </main>
+<main class="flex flex-grow justify-center items-center px-2">
+{{embed}}
+</main>
+<footer class="h-4 text-center text-gray-900 font-light text-xs">
+  <span>
+    © 
+    <span id="copyright-year">
+        <script>document.getElementById('copyright-year').innerText = new Date().getFullYear()</script>
+    </span>
+    {{ copyright }}
+  </span>
+  |
+  <span>
+    {{ support_email }}
+  </span>
+</footer>
 </body>
 
 </html>

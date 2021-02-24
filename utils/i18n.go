@@ -26,18 +26,10 @@ func init() {
 	}
 }
 
-type Localizer struct {
-	Localizer *i18n.Localizer
+func Translate(lang string, key string) string {
+	return i18n.NewLocalizer(bundle, lang).MustLocalize(&i18n.LocalizeConfig{MessageID: key})
 }
 
-func GetLocalizer(lang string) *Localizer {
-	return &Localizer{Localizer: i18n.NewLocalizer(bundle, lang)}
-}
-
-func (loc *Localizer) Translate(key string) string {
-	return loc.Localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: key})
-}
-
-func (loc *Localizer) TranslateWithArgs(key string, args map[string]string) string {
-	return loc.Localizer.MustLocalize(&i18n.LocalizeConfig{MessageID: key, TemplateData: args})
+func TranslateWithArgs(lang string, key string, args map[string]string) string {
+	return i18n.NewLocalizer(bundle, lang).MustLocalize(&i18n.LocalizeConfig{MessageID: key, TemplateData: args})
 }

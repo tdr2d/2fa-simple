@@ -40,7 +40,6 @@ func (handler *Handler) PasswordResetPost(c *fiber.Ctx) error {
 		"Website": handler.Conf.Website,
 		"Link":    fmt.Sprintf("%s/password-change/%s", handler.Conf.BaseUrl, code),
 		"Company": handler.Conf.CompanyName,
-		"lang":    handler.Conf.Language,
 	}
 	password_reset_mail, err := utils.RenderTemplate(handler.Conf.TemplateDir+"/mail/change_password.html", data)
 	if err != nil {
@@ -66,11 +65,11 @@ func (handler *Handler) PasswordChangeGet(c *fiber.Ctx) error {
 		return fiber.ErrUnauthorized
 	}
 	if int(time.Now().Unix()) > session.Get("password_change_code_expiration").(int) {
-		return c.Status(fiber.StatusUnauthorized).SendString("code_expired")
+		return c.Status(fiber.StatusUnauthorized).SendString(utils.Translate(handler.Conf.Language, "expired_link"))
 	}
 
 	if c.Params("code") != session.Get("password_change_code").(string) {
-		return c.Status(fiber.StatusUnauthorized).SendString("code_invalid")
+		return c.Status(fiber.StatusUnauthorized).SendString(utils.Translate(handler.Conf.Language, "invalid_link"))
 	}
 
 	return c.Render("password_change", fiber.Map{"Title": "Password Change", "lang": handler.Conf.Language}, "layout")
@@ -99,7 +98,7 @@ func (handler *Handler) PasswordChangePost(c *fiber.Ctx) error {
 		return fiber.ErrUnauthorized
 	}
 	if int(time.Now().Unix()) > session.Get("password_change_code_expiration").(int) {
-		return c.Status(fiber.StatusUnauthorized).SendString("code_expired")
+		return c.Status(fiber.StatusUnauthorized).SendString(utils.Translate(handler.Conf.Language, "expired_link"))
 	}
 
 	email := strings.TrimSpace(session.Get("email").(string))
@@ -108,9 +107,7 @@ func (handler *Handler) PasswordChangePost(c *fiber.Ctx) error {
 		return err
 	}
 	logrus.Info("New Password " + email + " " + hash)
-	utils.WriteYaml(&handler.Conf, "config.yml")
-
-	// TODO write yaml yaml
+	utils.WriteYaml(&handler.Conf, "config.yml") // Overwrite the config file
 	session.Set("login_date_unix", int(time.Now().Unix()))
 	session.Delete("password_change_code")
 	session.Delete("password_change_code_expiration")

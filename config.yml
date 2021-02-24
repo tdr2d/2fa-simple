@@ -1,11 +1,12 @@
 base_url: http://localhost:3000
-language: fr
+language: en
 template_dir: templates
 spa_directory: web-spa
 spa_fallback: index.html
 sqlite_database: data/fiber.sqlite3
 website: example.com
 service_email: service@ecorp.co
+support_email: support@ecorp.co
 company_name: E-corp
 
 users:

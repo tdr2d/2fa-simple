@@ -23,6 +23,7 @@ type Config struct {
 
 	Website      string `yaml:"website"`
 	ServiceEmail string `yaml:"service_email"`
+	SupportEmail string `yaml:"support_email"`
 	CompanyName  string `yaml:"company_name"`
 
 	Users []UserConfig `yaml:"users"`

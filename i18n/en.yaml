@@ -1,11 +1,26 @@
-user_password_mismatch: ""
-email_code_code_expiration_undefined: ""
-code_expired: ""
-code_invalid: ""
-ok: ""
+# Login
+user_password_mismatch: "User or password invalid"
+email_code_code_expiration_undefined: "Email or code undefined"
+expired_link: "The link is expired"
+invalid_link: "The link is invalid"
+login_title: "Login"
+login: "Login"
+back_to_login: "Back to login"
+step_2_info: "<b>Two factor verification</b>: Continue login using the link sent by email"
+step_2_resend: "Resend validation code"
+forgotten_password: "Forgotten your password?"
+submit: "Submit"
+email: "email"
+password: "password"
 
-# Forms
-submit: ""
 
-# Password reset
-password_reset: ""
+# Password reset/change
+forgot_password_message: "Forgot your password ? Ask to renew your password"
+change_password_message: "You will receive an email to change your password if your account exists"
+change_password_title: "Change your password"
+new_password: ""
+new_password_check: ""
+password_no_match: "Passwords are not identical"
+
+
+copyright: "all right reseserved"

@@ -41,9 +41,17 @@ func main() {
 	handler := handlers.Handler{Conf: conf, Store: store}
 	engine := html.New("./templates", ".html")
 	// engine.Debug(true)
-	engine.AddFunc("trans", func(lang string, key string) string {
-		return utils.GetLocalizer(lang).Translate(key)
+	engine.AddFunc("trans", utils.Translate)
+	engine.AddFunc("copyright", func() string {
+		return conf.Website + " " + utils.Translate(conf.Language, "copyright")
 	})
+	engine.AddFunc("copyright", func() string {
+		return conf.Website + " " + utils.Translate(conf.Language, "copyright")
+	})
+	engine.AddFunc("support_email", func() string {
+		return conf.SupportEmail
+	})
+	// engine.AddFunc("support", conf.Website+" "+utils.Translate(conf.Language, "copyright"))
 	engine.Reload(true)
 
 	// Middlewares
