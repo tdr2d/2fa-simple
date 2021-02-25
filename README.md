@@ -5,8 +5,17 @@ Go Simple implementation of two-factor login flow using a local configuration fo
 - Supports i18n
 - TailwindCss is used for the Web-UI
 
-# Configuration
+# Docker and Configuration
+A prebuilt docker container exists:
+```bash
+docker run --rm --name 2fa \
+ -p 3000:3000 \
+ -e SENDGRID_API_KEY="ASFASFHASFASDQW" \
+ quay.io/twebber/2fa-simple
 ```
+
+To configure the app, mount **config.yml** to **/root/config.yml** in the container
+```yaml
 # config.yml
 base_url: http://localhost:3000
 language: fr
@@ -25,6 +34,7 @@ users:
   - email: test@example.com
     password: $2a$14$mPFZutVj5fBIEr7rjEqH0u7hm/PD3XmlM.cLZjc3Hle664Rz4mJ.K
 ```
+Add your Single-Page-Application (angular, react, js etc..) by mounting your files in **/root/web-spa**
 
 
 # Dev requirements
@@ -35,11 +45,7 @@ users:
 
 
 # TODO:
-- docker
 - deutsche Übersetzung
-
-Tests:
-- api end to end tests
 
 
 Optimizations:

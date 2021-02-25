@@ -1,17 +1,18 @@
 TAG := $(shell git describe --tags --abbrev=0)
+IMAGE := "quay.io/twebber/2fa-simple:${TAG}"
 
-test:
-	echo ${TAG}
 dev:
 	go run .
 test:
 	cd tests && go test
 docker_build:
-	docker build . -t quay.io/twebber/2fa-simple
+	docker build . -t ${IMAGE}
 docker_run:
-	docker run --rm --name 2fa -p 3000:3000 quay.io/twebber/2fa-simple
+	docker run --rm --name 2fa -p 3000:3000 ${IMAGE}
 docker_sh:
 	docker exec -it 2fa sh
+docker_push:
+	docker push ${IMAGE}
 
 ## Frontend
 tailwind:
