@@ -1,11 +1,15 @@
-run:
+TAG := $(shell git describe --tags --abbrev=0)
+
+test:
+	echo ${TAG}
+dev:
 	go run .
 test:
 	cd tests && go test
 docker_build:
 	docker build . -t quay.io/twebber/2fa-simple
 docker_run:
-	docker run --name 2fa -p 3000:3000 quay.io/twebber/2fa-simple
+	docker run --rm --name 2fa -p 3000:3000 quay.io/twebber/2fa-simple
 docker_sh:
 	docker exec -it 2fa sh
 

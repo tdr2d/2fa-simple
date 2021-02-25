@@ -35,8 +35,8 @@ users:
 
 
 # TODO:
-- i18n mails
 - docker
+- deutsche Übersetzung
 
 Tests:
 - api end to end tests

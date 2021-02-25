@@ -20,8 +20,9 @@ func SendGrid(from MailUser, to MailUser, subject string, content string) error 
 	message := mail.NewSingleEmail(f, subject, t, "", content)
 	client := sendgrid.NewSendClient(os.Getenv("SENDGRID_API_KEY"))
 	response, err := client.Send(message)
-	if response != nil {
-		logrus.Info(fmt.Sprintf("%d %s", response.StatusCode, response.Body))
+	if response != nil && response.StatusCode >= 400 {
+		logrus.Info(message)
+		logrus.Error(fmt.Sprintf("%d %s", response.StatusCode, response.Body))
 	}
 
 	return err

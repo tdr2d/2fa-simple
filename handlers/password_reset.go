@@ -36,24 +36,21 @@ func (handler *Handler) PasswordResetPost(c *fiber.Ctx) error {
 	session.Set("email", strings.TrimSpace(u.Email))
 	session.Set("password_change_code", code)
 	session.Set("password_change_code_expiration", int(time.Now().Add(time.Hour).Unix()))
-	data := fiber.Map{
+	data := map[string]string{
 		"Website": handler.Conf.Website,
 		"Link":    fmt.Sprintf("%s/password-change/%s", handler.Conf.BaseUrl, code),
 		"Company": handler.Conf.CompanyName,
 	}
-	password_reset_mail, err := utils.RenderTemplate(handler.Conf.TemplateDir+"/mail/change_password.html", data)
-	if err != nil {
+	password_reset_mail := utils.TranslateWithArgs(handler.Conf.Language, "mail_change_password", data)
+
+	// logrus.Info(password_reset_mail)
+	if err = utils.SendGrid(
+		utils.MailUser{Name: utils.Translate(handler.Conf.Language, "mail_change_password_title"), Mail: handler.Conf.ServiceEmail},
+		utils.MailUser{Name: "", Mail: strings.TrimSpace(u.Email)},
+		utils.Translate(handler.Conf.Language, "mail_change_password_title"),
+		password_reset_mail); err != nil {
 		return err
 	}
-
-	logrus.Info(password_reset_mail)
-	// if err = utils.SendGrid(
-	// 	utils.MailUser{Name: "Password Reset", Mail: handler.Conf.ServiceEmail},
-	// 	utils.MailUser{Name: "", Mail: email},
-	// 	"Password Reset",
-	// 	password_reset_mail); err != nil {
-	// 	return err
-	// }
 	session.Save()
 	return c.SendString("ok")
 }

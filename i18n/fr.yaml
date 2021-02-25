@@ -1,0 +1,45 @@
+# General
+copyright: "Tous droits réservés"
+
+# Login
+user_password_mismatch: "Nom d'utilisateur ou mot de passe invalide"
+email_code_code_expiration_undefined: "Email ou code non défini"
+expired_link: "Ce lien a expiré"
+invalid_link: "Ce lien est invalide"
+login_title: "Connexion"
+login: "Connexion"
+back_to_login: "Revenir en arrière"
+step_2_info: "<b>Vérification en deux étapes</b>: Continuer la connexion avec le lien reçu dans votre boîte aux lettres électronique"
+step_2_resend: "Renvoyer un lien par email"
+forgotten_password: "Mot de passe oublié?"
+submit: "Continuer"
+email: "email"
+password: "mot de passe"
+mail_login_check_name: "Mail de connexion"  # used as mail name
+mail_login_check_title: "Connexion: étape 2" # used as mail subject
+mail_login_check: |
+  Vous avez tenté de vous connecter à {{ .Website }}<br>
+  Cliquez sur ce lien de vérication pour vous connecter <a href="{{ .Link }}">{{ .Link }}</a> Valide 1h) <br>
+  <br>
+  Nous vous souhaitons une bonne journée,<br>
+  <br>
+  {{ .Company }}
+
+
+# Password reset/change
+forgot_password_message: "Mot de passe oublié ? Demander à changer de mot de passe"
+change_password_message: "Vous allez recevoir un mail pour changer de mot de passe si votre compte existe"
+change_password_title: "Changement de mot de passe"
+new_password: "nouveau mot de passe"
+new_password_check: "nouveau mot de passe (copie)"
+password_no_match: "Le mot de passe n'est pas identique"
+mail_change_password_title: "Réinitialisation de mot de passe"
+mail_change_password: |
+  Une personne a demandé à changer de mot de passe dans {{ .Website }}<br>
+  Cliquez sur ce lien pour générer un nouveau mot de passe et vous connecter <a href="{{ .Link }}">{{ .Link }}</a> (Valide 1h) <br>
+  <br>
+  Nous vous souhaitons une très bonne journée,<br>
+  <br>
+  {{ .Company }}
+
+

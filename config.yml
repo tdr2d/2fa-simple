@@ -1,5 +1,5 @@
 base_url: http://localhost:3000
-language: en
+language: fr
 template_dir: templates
 spa_directory: web-spa
 spa_fallback: index.html

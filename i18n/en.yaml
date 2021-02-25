@@ -10,34 +10,36 @@ login_title: "Login"
 login: "Login"
 back_to_login: "Back to login"
 step_2_info: "<b>Two factor verification</b>: Continue login using the link sent by email"
-step_2_resend: "Resend validation code"
+step_2_resend: "Resend login link"
 forgotten_password: "Forgotten your password?"
 submit: "Submit"
 email: "email"
 password: "password"
-
+mail_login_check_name: "Login Mail"  # used as mail name
+mail_login_check_title: "Login: Step 2" # used as mail subject
 mail_login_check: |
   You attempted to login to {{ .Website }}<br>
-  Your verification link is <a href="{{ .Link }}">{{ .Link }}</a> (Valid 1h) <br>
+  Click on the verification link to login <a href="{{ .Link }}">{{ .Link }}</a> (Valid 1h) <br>
   <br>
   Regards,<br>
   <br>
-  <small>{{ .Company }}</small>
+  {{ .Company }}
 
 
 # Password reset/change
 forgot_password_message: "Forgot your password ? Ask to renew your password"
 change_password_message: "You will receive an email to change your password if your account exists"
 change_password_title: "Change your password"
-new_password: ""
-new_password_check: ""
+new_password: "new password"
+new_password_check: "new password (check)"
 password_no_match: "Passwords are not identical"
+mail_change_password_title: "Password Reset"
 mail_change_password: |
-  Someone requested to change your password from {{ .Website }}<br>
+  Someone requested to change your password in {{ .Website }}<br>
   Follow this link to create a new password and login <a href="{{ .Link }}">{{ .Link }}</a> (Valid 1h) <br>
   <br>
   Regards,<br>
   <br>
-  <small>{{ .Company }}</small>
+  {{ .Company }}
 
 

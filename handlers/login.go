@@ -29,23 +29,20 @@ func (handler *Handler) sendLoginCheckMail(session *session.Session, email strin
 	session.Set("login_code", code)
 	session.Set("login_code_expiration", int(time.Now().Add(time.Hour).Unix()))
 	logrus.Info(session.Get("login_code_expiration"))
-	data := fiber.Map{
+	data := map[string]string{
 		"Website": handler.Conf.Website,
 		"Link":    fmt.Sprintf("%s/login-check/%s", handler.Conf.BaseUrl, code),
 		"Company": handler.Conf.CompanyName,
 	}
-	login_check_content, err := utils.RenderTemplate(fmt.Sprintf("%s/mail/login_check.html", handler.Conf.TemplateDir), data)
-	if err != nil {
+	login_check_content := utils.TranslateWithArgs(handler.Conf.Language, "mail_login_check", data)
+	// logrus.Info(login_check_content)
+	if err = utils.SendGrid(
+		utils.MailUser{Name: utils.Translate(handler.Conf.Language, "mail_login_check_name"), Mail: handler.Conf.ServiceEmail},
+		utils.MailUser{Name: "", Mail: email},
+		utils.Translate(handler.Conf.Language, "mail_login_check_title"),
+		login_check_content); err != nil {
 		return err
 	}
-	logrus.Info(login_check_content)
-	// if err = utils.SendGrid(
-	// 	utils.MailUser{Name: "Login Check", Mail: handler.Conf.ServiceEmail},
-	// 	utils.MailUser{Name: "", Mail: email},
-	// 	"Login Mail check",
-	// 	login_check_content); err != nil {
-	// 	return err
-	// }
 	return nil
 }
 
