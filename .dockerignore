@@ -1,0 +1,7 @@
+data/
+.git/
+README.md
+sendgrid.env
+web-2fa/node_modules/
+Makefile
+Dockerfile

@@ -1,3 +1,6 @@
+# General
+copyright: "all right reseserved"
+
 # Login
 user_password_mismatch: "User or password invalid"
 email_code_code_expiration_undefined: "Email or code undefined"
@@ -13,6 +16,14 @@ submit: "Submit"
 email: "email"
 password: "password"
 
+mail_login_check: |
+  You attempted to login to {{ .Website }}<br>
+  Your verification link is <a href="{{ .Link }}">{{ .Link }}</a> (Valid 1h) <br>
+  <br>
+  Regards,<br>
+  <br>
+  <small>{{ .Company }}</small>
+
 
 # Password reset/change
 forgot_password_message: "Forgot your password ? Ask to renew your password"
@@ -21,6 +32,12 @@ change_password_title: "Change your password"
 new_password: ""
 new_password_check: ""
 password_no_match: "Passwords are not identical"
+mail_change_password: |
+  Someone requested to change your password from {{ .Website }}<br>
+  Follow this link to create a new password and login <a href="{{ .Link }}">{{ .Link }}</a> (Valid 1h) <br>
+  <br>
+  Regards,<br>
+  <br>
+  <small>{{ .Company }}</small>
 
 
-copyright: "all right reseserved"

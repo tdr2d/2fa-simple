@@ -5,14 +5,14 @@
   "main": "index.js",
   "scripts": {
     "build": "npx tailwindcss-cli@latest build ./css/tailwind.css --no-autoprefixer -o ./css/tailwind.min.css",
-    "build_prod": "NODE_ENV=production npx tailwindcss-cli@latest build ./css/tailwind.css --no-autoprefixer -o ./css/tailwind.min.css && minify ./css/tailwind.min.css > ./css/tailwind.min.css"
+    "build_prod": "NODE_ENV=production npx tailwindcss-cli@latest build css/tailwind.css --no-autoprefixer -o css/tailwind.min.css && uglifycss css/tailwind.min.css --output css/tailwind.min.css"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^10.2.4",
-    "minify": "^7.0.1",
     "postcss": "^8.2.6",
-    "tailwindcss": "^2.0.3"
+    "tailwindcss": "^2.0.3",
+    "uglifycss": "0.0.29"
   }
 }

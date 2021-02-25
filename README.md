@@ -5,6 +5,27 @@ Go Simple implementation of two-factor login flow using a local configuration fo
 - Supports i18n
 - TailwindCss is used for the Web-UI
 
+# Configuration
+```
+# config.yml
+base_url: http://localhost:3000
+language: fr
+spa_directory: web-spa              # directory of your single page app
+spa_fallback: index.html            # requests will fallback once logged-in
+sqlite_database: data/fiber.sqlite3 # sqlite ddb for session storage
+
+# Email sender
+website: example.com            # Used in templates/layout.html and in the mail templates
+service_email: service@ecorp.co # Used to send an email
+support_email: service@ecorp.co # Shown in the footer
+company_name: E-corp
+
+# Users
+users:
+  - email: test@example.com
+    password: $2a$14$mPFZutVj5fBIEr7rjEqH0u7hm/PD3XmlM.cLZjc3Hle664Rz4mJ.K
+```
+
 
 # Dev requirements
 - go 1.14+
@@ -14,9 +35,8 @@ Go Simple implementation of two-factor login flow using a local configuration fo
 
 
 # TODO:
-- i18n
+- i18n mails
 - docker
-
 
 Tests:
 - api end to end tests
